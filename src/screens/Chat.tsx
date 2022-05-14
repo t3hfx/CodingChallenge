@@ -1,39 +1,46 @@
 import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {FC} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
+import {BottomInput} from '@/components/BottomInput';
 import {CustomStatusBar} from '@/components/CustomStatusBar';
 import {Header} from '@/components/Header';
-import {blackPrimary, purple100, white} from '@/constants/colors';
-import {RootContainerStackParamList, Screens} from '@/navigation/constants';
-import {font} from '@/utils/style';
+import {Messages} from '@/components/Messages';
+import {blackPrimary} from '@/constants/colors';
+import {width} from '@/constants/dimensions';
+import {useChat} from '@/hooks/useChat';
+import {RootContainerStackParamList} from '@/navigation/constants';
 
 export const Chat: FC = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootContainerStackParamList>>();
+
+  const {totalMembers, onlineMembers, messages, user, handlePress} = useChat();
   return (
     <>
-      <CustomStatusBar backgroundColor={purple100} />
+      <CustomStatusBar />
       <SafeAreaView style={styles.container}>
         <Header
           icon="close-outline"
           channelName="Squad"
-          totalMembers={1}
-          onlineMembers={1}
+          totalMembers={totalMembers}
+          onlineMembers={onlineMembers}
           chatImage={
             'https://static.wikia.nocookie.net/warriors-shattered/images/5/57/Blueberry.temporary.jpeg/revision/latest?cb=20190412161611'
           }
         />
-        <View style={styles.container}>
-          <Text
+        <View style={styles.chatContainer}>
+          <Messages user={user} messages={messages} />
+          <BottomInput />
+          {/* <Text
             onPress={() => {
               navigation.navigate(Screens.Poll);
             }}
             style={styles.text}>
             Open poll
-          </Text>
+          </Text> */}
         </View>
       </SafeAreaView>
     </>
@@ -47,8 +54,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: blackPrimary,
   },
-  text: {
-    color: white,
-    ...font(16, 28, '400', true),
+  chatContainer: {
+    flex: 1,
+    width: width,
   },
+  // text: {
+  //   color: white,
+  //   ...font(16, 28, '400', true),
+  // },
 });
