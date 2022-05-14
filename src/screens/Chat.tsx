@@ -4,8 +4,9 @@ import React, {FC} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
+import {CustomStatusBar} from '@/components/CustomStatusBar';
 import {Header} from '@/components/Header';
-import {blackPrimary, white} from '@/constants/colors';
+import {blackPrimary, purple100, white} from '@/constants/colors';
 import {RootContainerStackParamList, Screens} from '@/navigation/constants';
 import {font} from '@/utils/style';
 
@@ -13,18 +14,29 @@ export const Chat: FC = () => {
   const navigation =
     useNavigation<NativeStackNavigationProp<RootContainerStackParamList>>();
   return (
-    <SafeAreaView style={styles.container}>
-      <Header />
-      <View style={styles.container}>
-        <Text
-          onPress={() => {
-            navigation.navigate(Screens.Poll);
-          }}
-          style={styles.text}>
-          Open poll
-        </Text>
-      </View>
-    </SafeAreaView>
+    <>
+      <CustomStatusBar backgroundColor={purple100} />
+      <SafeAreaView style={styles.container}>
+        <Header
+          icon="close-outline"
+          channelName="Squad"
+          totalMembers={1}
+          onlineMembers={1}
+          chatImage={
+            'https://static.wikia.nocookie.net/warriors-shattered/images/5/57/Blueberry.temporary.jpeg/revision/latest?cb=20190412161611'
+          }
+        />
+        <View style={styles.container}>
+          <Text
+            onPress={() => {
+              navigation.navigate(Screens.Poll);
+            }}
+            style={styles.text}>
+            Open poll
+          </Text>
+        </View>
+      </SafeAreaView>
+    </>
   );
 };
 

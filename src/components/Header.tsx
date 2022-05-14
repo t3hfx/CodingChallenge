@@ -2,36 +2,41 @@ import React, {FC} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import {purple100, white, whitePrimary} from '@/constants/colors';
+import {gray100, purple100, whitePrimary} from '@/constants/colors';
 import {width} from '@/constants/dimensions';
 import {font} from '@/utils/style';
 
+import {CustomImage} from './CustomImage';
+
 type Props = {
+  icon: string;
   channelName: string;
   totalMembers: number | undefined;
   onlineMembers: number | undefined;
-  chatIcon: string | undefined;
+  chatImage: string | undefined;
 };
 
 export const Header: FC<Props> = ({
+  icon,
   channelName,
   totalMembers,
   onlineMembers,
-  chatIcon,
+  chatImage,
 }) => {
   //   const navigation =
   //     useNavigation<NativeStackNavigationProp<RootContainerStackParamList>>();
   return (
     <View style={styles.container}>
-      <Icon name="close-outline" size={18} color={whitePrimary} />
+      <Icon name={icon} size={28} color={whitePrimary} style={styles.icon} />
       <View style={styles.textContainer}>
         <Text style={styles.channelName}>{channelName}</Text>
         <View style={styles.bottomTextContainer}>
-          <Text style={styles.channelName}>{totalMembers}</Text>
-          <Text style={styles.channelName}>*</Text>
-          <Text style={styles.channelName}>onlineMembers</Text>
+          <Text style={styles.underLineText}>{`${totalMembers} member`}</Text>
+          <Text style={styles.underLineText}>{' · '}</Text>
+          <Text style={styles.underLineText}>{`${onlineMembers} online`}</Text>
         </View>
       </View>
+      <CustomImage source={chatImage} style={styles.image} />
     </View>
   );
 };
@@ -41,21 +46,34 @@ const styles = StyleSheet.create({
     height: 44,
     width,
     backgroundColor: purple100,
-    // flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // backgroundColor: blackPrimary,
+    justifyContent: 'space-between',
+    alignItems: 'center',
     flexDirection: 'row',
   },
-  textContainer: {},
+  icon: {
+    marginLeft: 25,
+  },
+  textContainer: {
+    alignItems: 'center',
+    flex: 1,
+    marginHorizontal: 30,
+  },
   channelName: {
     ...font(16, 19, '600'),
+    color: whitePrimary,
+  },
+  underLineText: {
+    ...font(12, 18, '400'),
+    color: gray100,
   },
   bottomTextContainer: {
     flexDirection: 'row',
+    marginHorizontal: 30,
   },
-  text: {
-    color: white,
-    ...font(16, 28, '400', true),
+  image: {
+    marginRight: 20,
+    height: 35,
+    width: 35,
+    borderRadius: 18,
   },
 });
