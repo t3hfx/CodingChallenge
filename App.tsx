@@ -3,13 +3,16 @@ import {StatusBar} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 import {Navigation} from '@/navigation/Navigation';
+import {StoreProvider} from '@/redux/provider';
 
 StatusBar.setBarStyle('light-content');
 
 const App = () => {
   return (
     <SafeAreaProvider>
-      <Navigation />
+      <StoreProvider>
+        <Navigation />
+      </StoreProvider>
     </SafeAreaProvider>
   );
 };
