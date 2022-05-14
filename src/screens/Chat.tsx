@@ -4,7 +4,8 @@ import React, {FC} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {black, white} from '@/constants/colors';
+import {Header} from '@/components/Header';
+import {blackPrimary, white} from '@/constants/colors';
 import {RootContainerStackParamList, Screens} from '@/navigation/constants';
 import {font} from '@/utils/style';
 
@@ -13,6 +14,7 @@ export const Chat: FC = () => {
     useNavigation<NativeStackNavigationProp<RootContainerStackParamList>>();
   return (
     <SafeAreaView style={styles.container}>
+      <Header />
       <View style={styles.container}>
         <Text
           onPress={() => {
@@ -31,7 +33,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: black,
+    backgroundColor: blackPrimary,
   },
   text: {
     color: white,
