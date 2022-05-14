@@ -1,14 +1,16 @@
 import React, {FC} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Animated, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import {whitePrimary} from '@/constants/colors';
+import {useKeyboardHeight} from '@/hooks/useKeyboardHeight';
 
 import {CustomInput} from './CustomInput';
 
 export const BottomInput: FC = ({}) => {
+  const translateY = useKeyboardHeight();
   return (
-    <View style={styles.container}>
+    <Animated.View style={[styles.container, {transform: [{translateY}]}]}>
       <Icon
         name={'megaphone-outline'}
         size={24}
@@ -22,7 +24,7 @@ export const BottomInput: FC = ({}) => {
         color={whitePrimary}
         style={styles.rightIcon}
       />
-    </View>
+    </Animated.View>
   );
 };
 

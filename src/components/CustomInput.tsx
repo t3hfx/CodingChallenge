@@ -9,7 +9,7 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import {gray100, purple200} from '@/constants/colors';
+import {gray100, purple200, whitePrimary} from '@/constants/colors';
 import {height, width} from '@/constants/dimensions';
 import {font} from '@/utils/style';
 
@@ -30,7 +30,7 @@ export const CustomInput: FC<TextInputProps & Props> = props => {
           ref={textInput}
           style={[styles.textInput]}
           //   placeholder={translate('comments.placeholder')}
-          //   placeholderTextColor={GRAY_LIGHT}
+          placeholderTextColor={gray100}
           //   onChangeText={text => onChangeTextInput(text)}
           //   value={textInputData}
           //   selectionColor={YELLOW_START}
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     paddingTop: 0,
     paddingBottom: 0,
-    color: gray100,
+    color: whitePrimary,
     maxHeight: height * 0.5,
     ...font(15, 23, '400'),
   },
