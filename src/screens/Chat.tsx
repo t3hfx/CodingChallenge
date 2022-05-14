@@ -1,24 +1,22 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {FC} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {useDispatch, useSelector} from 'react-redux';
 
 import {black, white} from '@/constants/colors';
-import {saveMessage} from '@/redux/modules/chat/actions';
-import {messagesSelector} from '@/redux/modules/chat/selectors';
+import {RootContainerStackParamList, Screens} from '@/navigation/constants';
 
 export const Chat: FC = () => {
-  const dispatch = useDispatch();
-  const messages = useSelector(messagesSelector);
+  const navigation = useNavigation<RootContainerStackParamList>();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         <Text
           onPress={() => {
-            dispatch(saveMessage('asdasdasd'));
+            navigation.navigate(Screens.Poll);
           }}
           style={styles.text}>
-          {String(messages)}
+          Open poll
         </Text>
       </View>
     </SafeAreaView>

@@ -3,6 +3,7 @@ import React from 'react';
 
 import {RootContainerStackParamList, Screens} from '@/navigation/constants';
 import {Chat} from '@/screens/Chat';
+import {Poll} from '@/screens/Poll';
 
 const Stack = createNativeStackNavigator<RootContainerStackParamList>();
 export const RootContainer = () => {
@@ -10,17 +11,14 @@ export const RootContainer = () => {
     <Stack.Navigator
       screenOptions={{
         gestureEnabled: true,
+        headerShown: false,
       }}
       initialRouteName={Screens.Chat}>
-      <Stack.Screen
-        name={Screens.Chat}
-        component={Chat}
-        options={{headerShown: false}}
-      />
+      <Stack.Screen name={Screens.Chat} component={Chat} />
       <Stack.Screen
         name={Screens.Poll}
-        component={Chat}
-        options={{headerShown: false}}
+        component={Poll}
+        options={{presentation: 'formSheet'}}
       />
     </Stack.Navigator>
   );
