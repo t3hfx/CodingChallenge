@@ -12,6 +12,7 @@ import com.facebook.soloader.SoLoader;
 import com.codingchallenge.newarchitecture.MainApplicationReactNativeHost;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import com.facebook.react.views.text.ReactFontManager;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -52,6 +53,7 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
+    ReactFontManager.getInstance().addCustomFont(this, "Poppins", R.font.poppins);
     // If you opted-in for the New Architecture, we enable the TurboModule system
     ReactFeatureFlags.useTurboModules = BuildConfig.IS_NEW_ARCHITECTURE_ENABLED;
     SoLoader.init(this, /* native exopackage */ false);
