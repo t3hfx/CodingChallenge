@@ -1,4 +1,4 @@
-import React, {FC, useRef} from 'react';
+import React, {forwardRef} from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -17,35 +17,32 @@ type Props = {
   containerStyle: StyleProp<ViewStyle>;
 };
 
-export const CustomInput: FC<TextInputProps & Props> = props => {
-  const {containerStyle, ...restProps} = props;
-  const textInput = useRef<TextInput>(null);
-  return (
-    <TouchableWithoutFeedback
-      onPress={() => {
-        textInput?.current?.focus();
-      }}>
-      <View style={[styles.inputContainer, containerStyle]}>
-        <TextInput
-          ref={textInput}
-          style={[styles.textInput]}
-          //   placeholder={translate('comments.placeholder')}
-          placeholderTextColor={gray100}
-          //   onChangeText={text => onChangeTextInput(text)}
-          //   value={textInputData}
-          //   selectionColor={YELLOW_START}
-          //   onFocus={() => setIsTextInputModalVisible(true)}
-          keyboardAppearance={'dark'}
-          multiline={true}
-          numberOfLines={1}
-          editable
-          autoCorrect={true}
-          {...restProps}
-        />
-      </View>
-    </TouchableWithoutFeedback>
-  );
-};
+export const CustomInput = forwardRef<TextInput, TextInputProps & Props>(
+  (props, ref) => {
+    const {containerStyle, ...restProps} = props;
+    return (
+      <TouchableWithoutFeedback
+        onPress={() => {
+          if (ref != null && typeof ref !== 'function') ref?.current?.focus();
+        }}>
+        <View style={[styles.inputContainer, containerStyle]}>
+          <TextInput
+            ref={ref}
+            style={[styles.textInput]}
+            placeholderTextColor={gray100}
+            selectionColor={whitePrimary}
+            keyboardAppearance={'dark'}
+            multiline={true}
+            numberOfLines={1}
+            editable
+            autoCorrect={true}
+            {...restProps}
+          />
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  },
+);
 
 const styles = StyleSheet.create({
   inputContainer: {
@@ -57,7 +54,6 @@ const styles = StyleSheet.create({
     width: width - 53 - 56,
     paddingVertical: 7,
     paddingHorizontal: 15,
-    flexDirection: 'row',
   },
   textInput: {
     flexGrow: 1,

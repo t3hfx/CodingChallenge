@@ -1,5 +1,3 @@
-import {useNavigation} from '@react-navigation/native';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {FC} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -10,14 +8,11 @@ import {Header} from '@/components/Header';
 import {Messages} from '@/components/Messages';
 import {blackPrimary} from '@/constants/colors';
 import {width} from '@/constants/dimensions';
-import {useChat} from '@/hooks/useChat';
-import {RootContainerStackParamList} from '@/navigation/constants';
+import {currentUser, useChat} from '@/hooks/useChat';
 
 export const Chat: FC = () => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<RootContainerStackParamList>>();
-
-  const {totalMembers, onlineMembers, messages, user, handlePress} = useChat();
+  const {totalMembers, onlineMembers, messages, addMessageStructured} =
+    useChat();
   return (
     <>
       <CustomStatusBar />
@@ -32,15 +27,8 @@ export const Chat: FC = () => {
           }
         />
         <View style={styles.chatContainer}>
-          <Messages user={user} messages={messages} />
-          <BottomInput />
-          {/* <Text
-            onPress={() => {
-              navigation.navigate(Screens.Poll);
-            }}
-            style={styles.text}>
-            Open poll
-          </Text> */}
+          <Messages user={currentUser} messages={messages} />
+          <BottomInput addMessageStructured={addMessageStructured} />
         </View>
       </SafeAreaView>
     </>

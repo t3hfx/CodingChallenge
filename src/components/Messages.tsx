@@ -2,6 +2,7 @@ import React, {FC, useCallback} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 
 import {blackPrimary, gray100, whitePrimary} from '@/constants/colors';
+import {currentUser} from '@/hooks/useChat';
 import {Message, User} from '@/types/messages';
 import {font} from '@/utils/style';
 
@@ -14,13 +15,21 @@ type Props = {
 
 export const Messages: FC<Props> = ({user, messages}) => {
   const renderItem = useCallback(({item}: {item: Message}) => {
+    const isCurrentUser = item.author === currentUser;
     return (
-      <View style={styles.message}>
-        <CustomImage source={item.author.avatar} style={styles.avatar} />
+      <View
+        style={[styles.message, isCurrentUser && styles.currentUserMessage]}>
+        {!isCurrentUser && (
+          <CustomImage source={item.author.avatar} style={styles.avatar} />
+        )}
+
         <View style={styles.textContainer}>
           <Text style={styles.name}>{item.author.name}</Text>
           <Text style={styles.messageText}>{item.message}</Text>
         </View>
+        {isCurrentUser && (
+          <CustomImage source={item.author.avatar} style={styles.avatar} />
+        )}
       </View>
     );
   }, []);
@@ -44,6 +53,12 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 25,
     flexDirection: 'row',
+    marginBottom: 15,
+  },
+  currentUserMessage: {
+    justifyContent: 'flex-end',
+    marginRight: 20,
+    flexWrap: 'wrap',
   },
   avatar: {
     height: 40,
@@ -52,6 +67,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     marginLeft: 15,
+    marginRight: 25,
   },
   name: {
     color: gray100,
