@@ -5,7 +5,7 @@ import {RootContainer} from './containers/RootContainer';
 
 export const Navigation = () => {
   return (
-    <NavigationContainer independent={true}>
+    <NavigationContainer>
       <RootContainer />
     </NavigationContainer>
   );

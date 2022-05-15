@@ -1,4 +1,4 @@
-import React, {FC, useCallback} from 'react';
+import React, {FC} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 
 import {blackPrimary, gray100, whitePrimary} from '@/constants/colors';
@@ -13,7 +13,7 @@ type Props = {
 };
 
 export const Messages: FC<Props> = ({messages}) => {
-  const renderItem = useCallback(({item}: {item: Message}) => {
+  const renderItem = ({item}: {item: Message}) => {
     const isCurrentUser = item.author.id === currentUser.id;
     return (
       <View
@@ -31,7 +31,7 @@ export const Messages: FC<Props> = ({messages}) => {
         )}
       </View>
     );
-  }, []);
+  };
 
   return (
     <FlatList

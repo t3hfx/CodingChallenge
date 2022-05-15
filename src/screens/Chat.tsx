@@ -32,22 +32,25 @@ export const Chat: FC = () => {
     />
   );
 
+  const middleHeaderComponent = (
+    <MiddleHeaderComponent
+      channelName={channelName}
+      totalMembers={totalMembers}
+      onlineMembers={onlineMembers}
+    />
+  );
+
   const rightHeaderComponent = (
     <CustomImage source={channelImage} style={styles.headerAvatar} />
   );
+
   return (
     <>
       <CustomStatusBar />
       <SafeAreaView style={styles.container}>
         <Header
           leftComponent={leftHeaderComponent}
-          middleComponent={
-            <MiddleHeaderComponent
-              channelName={channelName}
-              totalMembers={totalMembers}
-              onlineMembers={onlineMembers}
-            />
-          }
+          middleComponent={middleHeaderComponent}
           rightComponent={rightHeaderComponent}
         />
         <View style={styles.chatContainer}>
