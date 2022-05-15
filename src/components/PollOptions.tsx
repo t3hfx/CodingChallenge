@@ -28,7 +28,7 @@ type OptionState = {
 };
 
 type Props = {
-  containerStyle: StyleProp<ViewStyle>;
+  containerStyle?: StyleProp<ViewStyle>;
 };
 
 export const PollOptions: FC<Props> = ({containerStyle}) => {
