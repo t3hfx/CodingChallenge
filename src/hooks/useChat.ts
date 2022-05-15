@@ -31,6 +31,9 @@ export const roomId = 'room-1';
 export const useChat = () => {
   const totalMembers = 1;
   const onlineMembers = 1;
+  const channelName = 'Squad';
+  const channelImage =
+    'https://static.wikia.nocookie.net/warriors-shattered/images/5/57/Blueberry.temporary.jpeg/revision/latest?cb=20190412161611';
 
   const dispatch = useDispatch();
 
@@ -55,6 +58,8 @@ export const useChat = () => {
   return {
     totalMembers,
     onlineMembers,
+    channelName,
+    channelImage,
     messages,
     addMessageStructured,
   };

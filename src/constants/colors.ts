@@ -5,3 +5,6 @@ export const purple100 = '#1C1A2A';
 export const whitePrimary = '#FEFEFE';
 export const gray100 = '#7E7A9A';
 export const purple200 = '#2E2C3C';
+export const blue100 = '#161c2f';
+export const blue200 = '#14151e';
+export const pollBackgroundGradient = [blue100, blue200];

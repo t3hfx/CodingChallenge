@@ -1,40 +1,29 @@
 import React, {FC} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import {ColorValue, StyleSheet, View} from 'react-native';
 
-import {gray100, purple100, whitePrimary} from '@/constants/colors';
+import {purple100} from '@/constants/colors';
 import {width} from '@/constants/dimensions';
-import {font} from '@/utils/style';
-
-import {CustomImage} from './CustomImage';
 
 type Props = {
-  icon: string;
-  channelName: string;
-  totalMembers: number | undefined;
-  onlineMembers: number | undefined;
-  chatImage: string | undefined;
+  leftComponent: React.ReactNode;
+  middleComponent: React.ReactNode;
+  rightComponent: React.ReactNode;
+  backgroundColor?: ColorValue;
 };
 
 export const Header: FC<Props> = ({
-  icon,
-  channelName,
-  totalMembers,
-  onlineMembers,
-  chatImage,
+  leftComponent,
+  middleComponent,
+  rightComponent,
+  backgroundColor = purple100,
 }) => {
   return (
-    <View style={styles.container}>
-      <Icon name={icon} size={28} color={whitePrimary} style={styles.icon} />
-      <View style={styles.textContainer}>
-        <Text style={styles.channelName}>{channelName}</Text>
-        <View style={styles.bottomTextContainer}>
-          <Text style={styles.underLineText}>{`${totalMembers} member`}</Text>
-          <Text style={styles.underLineText}>{' · '}</Text>
-          <Text style={styles.underLineText}>{`${onlineMembers} online`}</Text>
-        </View>
+    <View style={[styles.container, {backgroundColor}]}>
+      <View style={styles.leftComponent}>{leftComponent && leftComponent}</View>
+      <View>{middleComponent && middleComponent}</View>
+      <View style={styles.rightComponent}>
+        {rightComponent && rightComponent}
       </View>
-      <CustomImage source={chatImage} style={styles.image} />
     </View>
   );
 };
@@ -43,35 +32,16 @@ const styles = StyleSheet.create({
   container: {
     height: 44,
     width,
-    backgroundColor: purple100,
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
   },
-  icon: {
-    marginLeft: 25,
+  leftComponent: {
+    width: 28,
+    height: 28,
+    marginLeft: 20,
   },
-  textContainer: {
-    alignItems: 'center',
-    flex: 1,
-    marginHorizontal: 30,
-  },
-  channelName: {
-    ...font(16, 19, '600'),
-    color: whitePrimary,
-  },
-  underLineText: {
-    ...font(12, 18, '400'),
-    color: gray100,
-  },
-  bottomTextContainer: {
-    flexDirection: 'row',
-    marginHorizontal: 30,
-  },
-  image: {
+  rightComponent: {
     marginRight: 20,
-    height: 35,
-    width: 35,
-    borderRadius: 18,
   },
 });
