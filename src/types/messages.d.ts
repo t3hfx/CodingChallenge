@@ -9,6 +9,8 @@ type User = {
 type PollItem = {
   text: string;
   voteCount: number;
+  voteIds: string[];
+  id: number;
 };
 
 export type Message = {

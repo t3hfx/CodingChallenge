@@ -39,8 +39,12 @@ export const PollOptions: FC<Props> = ({
 }) => {
   const canAddMoreOptions = options.length < 8;
   const addOption = () => {
-    if (canAddMoreOptions)
-      setOptions(options => [...options, {text: '', voteCount: 0}]);
+    if (canAddMoreOptions) {
+      setOptions(options => [
+        ...options,
+        {text: '', voteCount: 0, voteIds: [], id: options.length + 1},
+      ]);
+    }
   };
 
   const rightOptionsHeaderComponent = useMemo(() => {
@@ -90,7 +94,7 @@ const Option: FC<OptionProps> = ({index, setOptions}) => {
     setValue(text);
     setOptions(options => [
       ...options.slice(0, index),
-      {text: text, voteCount: 0},
+      {text: text, voteCount: 0, voteIds: [], id: options[index].id},
       ...options.slice(index + 1),
     ]);
   };

@@ -1,8 +1,11 @@
 import React, {FC} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {useDispatch} from 'react-redux';
 
 import {chatPollGradient, purple400, whitePrimary} from '@/constants/colors';
+import {currentUser} from '@/hooks/useChat';
+import {updateMessage} from '@/redux/modules/chat/actions';
 import {Message} from '@/types/messages';
 import {font} from '@/utils/style';
 
@@ -18,6 +21,32 @@ type Props = {
 const bgGradientLocations = [0, 1];
 
 export const ChatPoll: FC<Props> = ({item}) => {
+  const dispatch = useDispatch();
+
+  const hasIVoted = item.pollItems?.some(i =>
+    i.voteIds.includes(currentUser.id),
+  );
+
+  const onPollItemPress = (id: number) => {
+    if (!item.pollItems) return;
+    const indexOfPollItem = item.pollItems?.findIndex(i => i.id === id);
+    // console.log(indexOfPollItem);
+    const pollMessage: Message = {
+      ...item,
+      voteCount: item.voteCount + 1,
+      pollItems: [
+        ...item.pollItems.slice(0, indexOfPollItem),
+        {
+          ...item.pollItems[indexOfPollItem],
+          voteCount: item.pollItems[indexOfPollItem].voteCount + 1,
+          voteIds: [...item.pollItems[indexOfPollItem].voteIds, currentUser.id],
+        },
+        ...item.pollItems.slice(indexOfPollItem + 1),
+      ],
+    };
+    dispatch(updateMessage(pollMessage));
+  };
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -43,7 +72,15 @@ export const ChatPoll: FC<Props> = ({item}) => {
           <Text style={styles.messageText}>{item.message}</Text>
         </View>
         {item.pollItems?.map((i, index) => (
-          <PollItemClickable key={index} title={i.text} />
+          <PollItemClickable
+            key={index}
+            title={i.text}
+            disabled={hasIVoted}
+            voted={i.voteIds.includes(currentUser.id)}
+            onPress={() => {
+              onPollItemPress(i.id);
+            }}
+          />
         ))}
       </View>
     </View>

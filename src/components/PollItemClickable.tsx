@@ -7,17 +7,29 @@ import {
   ViewStyle,
 } from 'react-native';
 
-import {blue900opacity15, whitePrimary} from '@/constants/colors';
+import {blue900, blue900opacity15, whitePrimary} from '@/constants/colors';
 import {font} from '@/utils/style';
 
 type Props = {
   title: string;
+  onPress: () => void;
+  disabled: boolean;
+  voted: boolean;
   style?: StyleProp<ViewStyle>;
 };
 
-export const PollItemClickable: FC<Props> = ({title, style}) => {
+export const PollItemClickable: FC<Props> = ({
+  title,
+  onPress,
+  disabled,
+  voted,
+  style,
+}) => {
   return (
-    <TouchableOpacity style={[styles.container, style]}>
+    <TouchableOpacity
+      onPress={onPress}
+      disabled={disabled}
+      style={[styles.container, voted && styles.voted, style]}>
       <Text style={styles.title}>{title}</Text>
     </TouchableOpacity>
   );
@@ -32,6 +44,9 @@ const styles = StyleSheet.create({
     paddingVertical: 11,
     paddingHorizontal: 15,
     marginTop: 10,
+  },
+  voted: {
+    backgroundColor: blue900,
   },
   title: {
     ...font(12, 18, '400'),
