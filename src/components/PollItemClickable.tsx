@@ -13,7 +13,7 @@ import {font} from '@/utils/style';
 type Props = {
   title: string;
   onPress: () => void;
-  disabled: boolean;
+  disabled?: boolean;
   voted: boolean;
   style?: StyleProp<ViewStyle>;
 };

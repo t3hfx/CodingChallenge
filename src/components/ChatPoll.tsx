@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useMemo} from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {useDispatch} from 'react-redux';
@@ -18,14 +18,16 @@ type Props = {
   item: Message;
 };
 
+//I don't know why this component isn't correctly parsed by eslint and showing unused vars errors
+
 const bgGradientLocations = [0, 1];
 
 export const ChatPoll: FC<Props> = ({item}) => {
   const dispatch = useDispatch();
 
-  const hasIVoted = item.pollItems?.some(i =>
-    i.voteIds.includes(currentUser.id),
-  );
+  const hasIVoted = useMemo(() => {
+    return item.pollItems?.some(i => i.voteIds.includes(currentUser.id));
+  }, []);
 
   const onPollItemPress = (id: number) => {
     if (!item.pollItems) return;
@@ -33,7 +35,7 @@ export const ChatPoll: FC<Props> = ({item}) => {
     // console.log(indexOfPollItem);
     const pollMessage: Message = {
       ...item,
-      voteCount: item.voteCount + 1,
+      voteCount: (item.voteCount as number) + 1,
       pollItems: [
         ...item.pollItems.slice(0, indexOfPollItem),
         {

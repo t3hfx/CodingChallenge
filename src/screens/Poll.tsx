@@ -67,7 +67,7 @@ export const Poll: FC<Props> = ({navigation}) => {
           locations={bgGradientLocations}
           style={styles.backgroundGradient}
         />
-        <PollBody />
+        <PollBody navigation={navigation} />
       </View>
     </KeyboardAwareScrollView>
   );

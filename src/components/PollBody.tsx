@@ -1,3 +1,4 @@
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import React, {FC, useEffect, useMemo} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
@@ -7,6 +8,7 @@ import {width} from '@/constants/dimensions';
 import {currentUser, roomId, uuidv4} from '@/hooks/useChat';
 import {useOptions} from '@/hooks/useOptions';
 import {useTextInput} from '@/hooks/useTextInput';
+import {RootContainerStackParamList, Screens} from '@/navigation/constants';
 import {saveMessage, setCreatePollFlag} from '@/redux/modules/chat/actions';
 import {createPollFlagSelector} from '@/redux/modules/chat/selectors';
 import {Message} from '@/types/messages';
@@ -16,9 +18,14 @@ import {CustomTextInputHeader} from './CustomTextInputHeader';
 import {DigitCountdownText} from './DigitCountdownText';
 import {PollOptions} from './PollOptions';
 
-type Props = {};
+type Props = {
+  navigation: NativeStackNavigationProp<
+    RootContainerStackParamList,
+    Screens.Poll
+  >;
+};
 
-export const PollBody: FC<Props> = ({}) => {
+export const PollBody: FC<Props> = ({navigation}) => {
   const {textInputRef, value, error, setError, setValue} = useTextInput();
   const {options, setOptions, optionsError, setOptionsError} = useOptions();
 
@@ -48,8 +55,10 @@ export const PollBody: FC<Props> = ({}) => {
         pollItems: options,
       };
 
-      if (everyOptionHasValues && questionHasValues && !noQuestions)
+      if (everyOptionHasValues && questionHasValues && !noQuestions) {
         dispatch(saveMessage(pollMessage));
+        navigation.goBack();
+      }
 
       if (!everyOptionHasValues || noQuestions) setOptionsError(true);
 
