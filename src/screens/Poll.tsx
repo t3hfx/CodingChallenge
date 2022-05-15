@@ -4,6 +4,7 @@ import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
+import {useDispatch} from 'react-redux';
 
 import {Header} from '@/components/Header';
 import {PollBody} from '@/components/PollBody';
@@ -16,6 +17,7 @@ import {
   whitePrimary,
 } from '@/constants/colors';
 import {RootContainerStackParamList, Screens} from '@/navigation/constants';
+import {setCreatePollFlag} from '@/redux/modules/chat/actions';
 import {font} from '@/utils/style';
 
 const bgGradientLocations = [0, 1];
@@ -23,6 +25,8 @@ const bgGradientLocations = [0, 1];
 type Props = NativeStackScreenProps<RootContainerStackParamList, Screens.Poll>;
 
 export const Poll: FC<Props> = ({navigation}) => {
+  const dispatch = useDispatch();
+
   const leftHeaderComponent = (
     <TouchableOpacity onPress={() => navigation.goBack()}>
       <Icon name={'close-outline'} size={28} color={whitePrimary} />
@@ -38,7 +42,10 @@ export const Poll: FC<Props> = ({navigation}) => {
   );
 
   const rightHeaderComponent = (
-    <TouchableOpacity onPress={() => {}}>
+    <TouchableOpacity
+      onPress={() => {
+        dispatch(setCreatePollFlag());
+      }}>
       <Text style={styles.rightHeaderButtonText}>Create</Text>
     </TouchableOpacity>
   );
@@ -46,7 +53,8 @@ export const Poll: FC<Props> = ({navigation}) => {
   return (
     <KeyboardAwareScrollView
       style={styles.scrollViewBackground}
-      contentContainerStyle={styles.container}>
+      contentContainerStyle={styles.container}
+      keyboardDismissMode="on-drag">
       <Header
         leftComponent={leftHeaderComponent}
         middleComponent={middleHeaderComponent}

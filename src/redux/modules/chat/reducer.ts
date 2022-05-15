@@ -1,10 +1,11 @@
 import {roomId, someUser, uuidv4} from '@/hooks/useChat';
 import {Message} from '@/types/messages';
 
-import {saveMessage} from './actions';
+import {saveMessage, setCreatePollFlag} from './actions';
 
 const initialState: {
   messages: Message[];
+  createPollFlag: boolean;
 } = {
   messages: [
     {
@@ -33,17 +34,25 @@ const initialState: {
         'Hey, cat, how r u doin, man, we gonna go and party near the suburbs',
     },
   ],
+  createPollFlag: false,
 };
 
 export const chatReducer = (
   state = initialState,
-  action: ReturnType<typeof saveMessage>,
+  action: ReturnType<typeof saveMessage | typeof setCreatePollFlag>,
 ): typeof initialState => {
   switch (action.type) {
     case 'SAVE_MESSAGE': {
       return {
         ...state,
         messages: [action.message, ...state.messages],
+      };
+    }
+
+    case 'SET_CREATE_POLL_FLAG': {
+      return {
+        ...state,
+        createPollFlag: !state.createPollFlag,
       };
     }
 

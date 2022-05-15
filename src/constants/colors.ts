@@ -9,6 +9,7 @@ export const blue100 = '#161c2f';
 export const blue200 = '#14151e';
 export const blue900 = '#1C6EF2';
 export const blue900opacity10 = 'rgba(28, 110, 242,0.1)';
+export const red100 = '#8c002a';
 
 //gradients
 export const pollBackgroundGradient = [blue100, blue200];

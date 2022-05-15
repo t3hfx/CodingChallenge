@@ -1,4 +1,4 @@
-import React, {FC, useMemo, useState} from 'react';
+import React, {FC, useMemo} from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -16,6 +16,7 @@ import {
   whitePrimary,
 } from '@/constants/colors';
 import {width} from '@/constants/dimensions';
+import {OptionState} from '@/hooks/useOptions';
 import {useTextInput} from '@/hooks/useTextInput';
 import {font} from '@/utils/style';
 
@@ -23,16 +24,19 @@ import {CustomInput} from './CustomInput';
 import {CustomTextInputHeader} from './CustomTextInputHeader';
 import {DigitCountdownText} from './DigitCountdownText';
 
-type OptionState = {
-  text: string;
-};
-
 type Props = {
+  options: OptionState[];
+  setOptions: React.Dispatch<React.SetStateAction<OptionState[]>>;
+  optionsError: boolean;
   containerStyle?: StyleProp<ViewStyle>;
 };
 
-export const PollOptions: FC<Props> = ({containerStyle}) => {
-  const [options, setOptions] = useState<OptionState[]>([]);
+export const PollOptions: FC<Props> = ({
+  options,
+  setOptions,
+  optionsError,
+  containerStyle,
+}) => {
   const canAddMoreOptions = options.length < 8;
   const addOption = () => {
     if (canAddMoreOptions) setOptions(options => [...options, {text: ''}]);
@@ -48,6 +52,8 @@ export const PollOptions: FC<Props> = ({containerStyle}) => {
         title={'Options'}
         rightComponent={rightOptionsHeaderComponent}
         style={styles.optionsHeader}
+        error={optionsError}
+        errorText={'Please fill all the fields'}
       />
       {options.map((i, index) => (
         <Option
@@ -79,11 +85,19 @@ const Option: FC<OptionProps> = ({index, setOptions}) => {
       options.filter((_, optionIndex) => optionIndex !== index),
     );
   };
+  const updateOptionValue = (text: string) => {
+    setValue(text);
+    setOptions(options => [
+      ...options.slice(0, index),
+      {text: text},
+      ...options.slice(index + 1),
+    ]);
+  };
   return (
     <View>
       <CustomInput
         ref={textInputRef}
-        onChangeText={text => setValue(text)}
+        onChangeText={updateOptionValue}
         autoCorrect={false}
         value={value}
         placeholder={'Type your option'}

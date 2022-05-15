@@ -47,7 +47,7 @@ export const useChat = () => {
     const textMessage: Message = {
       author: currentUser,
       id: uuidv4(),
-      type: message ? 'text' : 'poll',
+      type: 'text',
       createdAt: Date.now(),
       roomId: roomId,
       message: message,
