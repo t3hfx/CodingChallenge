@@ -5,5 +5,4 @@ import {rootReducer} from './rootReducer';
 
 export const store = createStore(rootReducer);
 
-// @ts-ignore typing issue with redux persist
 export const persistor = persistStore(store);
