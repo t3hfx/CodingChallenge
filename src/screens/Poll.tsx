@@ -1,6 +1,7 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {FC} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -9,6 +10,7 @@ import {PollBody} from '@/components/PollBody';
 import {
   black,
   blue100,
+  blue200,
   gray100,
   pollBackgroundGradient,
   whitePrimary,
@@ -36,11 +38,15 @@ export const Poll: FC<Props> = ({navigation}) => {
   );
 
   const rightHeaderComponent = (
-    <Text style={styles.rightHeaderButtonText}>Create</Text>
+    <TouchableOpacity onPress={() => {}}>
+      <Text style={styles.rightHeaderButtonText}>Create</Text>
+    </TouchableOpacity>
   );
 
   return (
-    <>
+    <KeyboardAwareScrollView
+      style={styles.scrollViewBackground}
+      contentContainerStyle={styles.container}>
       <Header
         leftComponent={leftHeaderComponent}
         middleComponent={middleHeaderComponent}
@@ -55,7 +61,7 @@ export const Poll: FC<Props> = ({navigation}) => {
         />
         <PollBody />
       </View>
-    </>
+    </KeyboardAwareScrollView>
   );
 };
 
@@ -63,6 +69,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: black,
+  },
+  scrollViewBackground: {
+    backgroundColor: blue200,
   },
   middleHeaderComponentText: {
     color: whitePrimary,
