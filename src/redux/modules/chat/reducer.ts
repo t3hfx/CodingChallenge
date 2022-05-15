@@ -1,9 +1,38 @@
+import {roomId, someUser, uuidv4} from '@/hooks/useChat';
+import {Message} from '@/types/messages';
+
 import {saveMessage} from './actions';
 
 const initialState: {
-  messages: {} | string;
+  messages: Message[];
 } = {
-  messages: {},
+  messages: [
+    {
+      author: someUser,
+      id: uuidv4(),
+      type: 'text',
+      createdAt: Date.now(),
+      roomId: roomId,
+      message: "Hey, man, please reply, we're already by your house",
+    },
+    {
+      author: someUser,
+      id: uuidv4(),
+      type: 'text',
+      createdAt: Date.now(),
+      roomId: roomId,
+      message: 'Are u up to have some fun together?',
+    },
+    {
+      author: someUser,
+      id: uuidv4(),
+      type: 'text',
+      createdAt: Date.now(),
+      roomId: roomId,
+      message:
+        'Hey, cat, how r u doin, man, we gonna go and party near the suburbs',
+    },
+  ],
 };
 
 export const chatReducer = (
@@ -14,7 +43,7 @@ export const chatReducer = (
     case 'SAVE_MESSAGE': {
       return {
         ...state,
-        messages: action.message,
+        messages: [action.message, ...state.messages],
       };
     }
 

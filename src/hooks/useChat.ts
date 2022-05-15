@@ -1,8 +1,10 @@
-import {useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 
+import {saveMessage} from '@/redux/modules/chat/actions';
+import {messagesSelector} from '@/redux/modules/chat/selectors';
 import {Message} from '@/types/messages';
 
-const uuidv4 = () => {
+export const uuidv4 = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
     const r = Math.floor(Math.random() * 16);
     const v = c === 'x' ? r : (r % 4) + 8;
@@ -10,7 +12,7 @@ const uuidv4 = () => {
   });
 };
 
-const someUser = {
+export const someUser = {
   id: 'user-1',
   name: 'Charlie',
   avatar:
@@ -24,43 +26,19 @@ export const currentUser = {
     'https://pbs.twimg.com/profile_images/1311008414156423170/Kxu_7mQS_400x400.jpg',
 };
 
+export const roomId = 'room-1';
+
 export const useChat = () => {
   const totalMembers = 1;
   const onlineMembers = 1;
-  const roomId = 'room-1';
 
-  //   const [messages, setMessages] = useState<Message[]>([]);
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      author: someUser,
-      id: uuidv4(),
-      type: 'text',
-      createdAt: Date.now(),
-      roomId: roomId,
-      message: "Hey, man, please reply, we're already by your house",
-    },
-    {
-      author: someUser,
-      id: uuidv4(),
-      type: 'text',
-      createdAt: Date.now(),
-      roomId: roomId,
-      message: 'Are u up to have some fun together?',
-    },
-    {
-      author: someUser,
-      id: uuidv4(),
-      type: 'text',
-      createdAt: Date.now(),
-      roomId: roomId,
-      message:
-        'Hey, cat, how r u doin, man, we gonna go and party near the suburbs',
-    },
-  ]);
+  const dispatch = useDispatch();
 
   const addMessage = (message: Message) => {
-    setMessages([message, ...messages]);
+    dispatch(saveMessage(message));
   };
+
+  const messages = useSelector(messagesSelector);
 
   const addMessageStructured = (message: string) => {
     const textMessage: Message = {

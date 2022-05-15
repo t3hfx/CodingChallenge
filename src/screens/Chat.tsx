@@ -8,7 +8,7 @@ import {Header} from '@/components/Header';
 import {Messages} from '@/components/Messages';
 import {blackPrimary} from '@/constants/colors';
 import {width} from '@/constants/dimensions';
-import {currentUser, useChat} from '@/hooks/useChat';
+import {useChat} from '@/hooks/useChat';
 
 export const Chat: FC = () => {
   const {totalMembers, onlineMembers, messages, addMessageStructured} =
@@ -27,7 +27,7 @@ export const Chat: FC = () => {
           }
         />
         <View style={styles.chatContainer}>
-          <Messages user={currentUser} messages={messages} />
+          <Messages messages={messages} />
           <BottomInput addMessageStructured={addMessageStructured} />
         </View>
       </SafeAreaView>
@@ -46,8 +46,4 @@ const styles = StyleSheet.create({
     flex: 1,
     width: width,
   },
-  // text: {
-  //   color: white,
-  //   ...font(16, 28, '400', true),
-  // },
 });

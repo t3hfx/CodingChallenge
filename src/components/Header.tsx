@@ -23,8 +23,6 @@ export const Header: FC<Props> = ({
   onlineMembers,
   chatImage,
 }) => {
-  //   const navigation =
-  //     useNavigation<NativeStackNavigationProp<RootContainerStackParamList>>();
   return (
     <View style={styles.container}>
       <Icon name={icon} size={28} color={whitePrimary} style={styles.icon} />

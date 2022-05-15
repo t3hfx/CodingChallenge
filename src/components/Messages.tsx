@@ -3,19 +3,18 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 
 import {blackPrimary, gray100, whitePrimary} from '@/constants/colors';
 import {currentUser} from '@/hooks/useChat';
-import {Message, User} from '@/types/messages';
+import {Message} from '@/types/messages';
 import {font} from '@/utils/style';
 
 import {CustomImage} from './CustomImage';
 
 type Props = {
-  user: User;
   messages: Message[];
 };
 
-export const Messages: FC<Props> = ({user, messages}) => {
+export const Messages: FC<Props> = ({messages}) => {
   const renderItem = useCallback(({item}: {item: Message}) => {
-    const isCurrentUser = item.author === currentUser;
+    const isCurrentUser = item.author.id === currentUser.id;
     return (
       <View
         style={[styles.message, isCurrentUser && styles.currentUserMessage]}>
