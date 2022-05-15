@@ -3,6 +3,7 @@ import React, {FC} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import LinearGradient from 'react-native-linear-gradient';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/Ionicons';
 import {useDispatch} from 'react-redux';
 
@@ -16,6 +17,7 @@ import {
   pollBackgroundGradient,
   whitePrimary,
 } from '@/constants/colors';
+import {IS_IOS} from '@/constants/platform';
 import {RootContainerStackParamList, Screens} from '@/navigation/constants';
 import {setCreatePollFlag} from '@/redux/modules/chat/actions';
 import {font} from '@/utils/style';
@@ -50,17 +52,21 @@ export const Poll: FC<Props> = ({navigation}) => {
     </TouchableOpacity>
   );
 
+  const header = (
+    <Header
+      leftComponent={leftHeaderComponent}
+      middleComponent={middleHeaderComponent}
+      rightComponent={rightHeaderComponent}
+      backgroundColor={blue100}
+    />
+  );
+
   return (
     <KeyboardAwareScrollView
       style={styles.scrollViewBackground}
       contentContainerStyle={styles.container}
       keyboardDismissMode="on-drag">
-      <Header
-        leftComponent={leftHeaderComponent}
-        middleComponent={middleHeaderComponent}
-        rightComponent={rightHeaderComponent}
-        backgroundColor={blue100}
-      />
+      {IS_IOS ? header : <SafeAreaView>{header}</SafeAreaView>}
       <View style={styles.container}>
         <LinearGradient
           colors={pollBackgroundGradient}
