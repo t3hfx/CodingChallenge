@@ -16,7 +16,6 @@ export const CustomImage: FC<Props> = ({source, style}) => {
 
   return (
     <View style={style}>
-      {loading && <ActivityIndicator />}
       <FastImage
         style={style}
         onLoadEnd={() => setLoading(false)}
@@ -25,11 +24,20 @@ export const CustomImage: FC<Props> = ({source, style}) => {
         }}
         resizeMode={FastImage.resizeMode.cover}
       />
+      {loading && (
+        <View style={styles.loader}>
+          <ActivityIndicator />
+        </View>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  loader: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: 'center',
+  },
   placeholder: {
     backgroundColor: whitePrimary,
   },
