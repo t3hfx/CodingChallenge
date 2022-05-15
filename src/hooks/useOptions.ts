@@ -1,11 +1,9 @@
 import {useState} from 'react';
 
-export type OptionState = {
-  text: string;
-};
+import {PollItem} from '@/types/messages';
 
 export const useOptions = () => {
-  const [options, setOptions] = useState<OptionState[]>([]);
+  const [options, setOptions] = useState<PollItem[]>([]);
   const [optionsError, setOptionsError] = useState<boolean>(false);
 
   return {

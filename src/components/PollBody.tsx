@@ -16,14 +16,6 @@ import {CustomTextInputHeader} from './CustomTextInputHeader';
 import {DigitCountdownText} from './DigitCountdownText';
 import {PollOptions} from './PollOptions';
 
-const pollMessage: Message = {
-  author: currentUser,
-  id: uuidv4(),
-  type: 'poll',
-  createdAt: Date.now(),
-  roomId: roomId,
-};
-
 type Props = {};
 
 export const PollBody: FC<Props> = ({}) => {
@@ -45,6 +37,16 @@ export const PollBody: FC<Props> = ({}) => {
       const everyOptionHasValues = options.every(i => i.text.length > 0);
       const noQuestions = options.length === 0;
       const questionHasValues = value.length > 0;
+      const pollMessage: Message = {
+        author: currentUser,
+        id: uuidv4(),
+        type: 'poll',
+        createdAt: Date.now(),
+        roomId: roomId,
+        voteCount: 0,
+        message: value,
+        pollItems: options,
+      };
 
       if (everyOptionHasValues && questionHasValues && !noQuestions)
         dispatch(saveMessage(pollMessage));

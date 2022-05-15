@@ -16,8 +16,8 @@ import {
   whitePrimary,
 } from '@/constants/colors';
 import {width} from '@/constants/dimensions';
-import {OptionState} from '@/hooks/useOptions';
 import {useTextInput} from '@/hooks/useTextInput';
+import {PollItem} from '@/types/messages';
 import {font} from '@/utils/style';
 
 import {CustomInput} from './CustomInput';
@@ -25,8 +25,8 @@ import {CustomTextInputHeader} from './CustomTextInputHeader';
 import {DigitCountdownText} from './DigitCountdownText';
 
 type Props = {
-  options: OptionState[];
-  setOptions: React.Dispatch<React.SetStateAction<OptionState[]>>;
+  options: PollItem[];
+  setOptions: React.Dispatch<React.SetStateAction<PollItem[]>>;
   optionsError: boolean;
   containerStyle?: StyleProp<ViewStyle>;
 };
@@ -39,7 +39,8 @@ export const PollOptions: FC<Props> = ({
 }) => {
   const canAddMoreOptions = options.length < 8;
   const addOption = () => {
-    if (canAddMoreOptions) setOptions(options => [...options, {text: ''}]);
+    if (canAddMoreOptions)
+      setOptions(options => [...options, {text: '', voteCount: 0}]);
   };
 
   const rightOptionsHeaderComponent = useMemo(() => {
@@ -75,7 +76,7 @@ export const PollOptions: FC<Props> = ({
 type OptionProps = {
   text: string;
   index: number;
-  setOptions: React.Dispatch<React.SetStateAction<OptionState[]>>;
+  setOptions: React.Dispatch<React.SetStateAction<PollItem[]>>;
 };
 
 const Option: FC<OptionProps> = ({index, setOptions}) => {
@@ -89,7 +90,7 @@ const Option: FC<OptionProps> = ({index, setOptions}) => {
     setValue(text);
     setOptions(options => [
       ...options.slice(0, index),
-      {text: text},
+      {text: text, voteCount: 0},
       ...options.slice(index + 1),
     ]);
   };
